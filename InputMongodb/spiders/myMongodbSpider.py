@@ -12,7 +12,7 @@ class IntoMongodbSpiderSpider(scrapy.Spider):
     str2 = "&tab=ConcurrentUsers"
     page = 0
     start_urls = []
-    for page in range(1,1111):
+    for page in range(1,11):
         start_urls.append(str1+str(page)+str2)
 
     def parse(self, response):
@@ -45,23 +45,18 @@ class IntoMongodbSpiderSpider(scrapy.Spider):
                 print()
                 continue
 
-            yield item
+            # yield item
             detail_request = scrapy.Request(
                 url=detail_url,
                 callback=self.get_details,
                 headers={"Accept-Language": "zh-CN,zh;q=0.9"},
                 meta={"item": item, "detail_url": detail_url},
+                dont_filter=True,
             )
-            # yield detail_request
-
-        # next_page = response.css('li.next a::attr(href)').extract_first()
-        # # 判断是否存在下一页
-        # if next_page is not None:
-        #     next_page = response.urljoin(next_page)
-        #     # 提交给parse继续抓取下一页
-        #     yield scrapy.Request(next_page, callback=self.parse)
+            yield detail_request
 
     def get_details(self, response):
         item = response.meta["item"]
         detail_url = response.meta["detail_url"]
+        # 详情页面还没有爬，有必要再去爬评论页面
         yield item
