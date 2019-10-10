@@ -10,9 +10,10 @@ class InputmongodbPipeline(object):
     def __init__(self):
 
         self.client = pymongo.MongoClient(host='127.0.0.1', port=27017)
-        self.db = self.client.ScrapyChina
+        self.db = self.client["steam"]
+        self.coll=self.db["steam"]
 
     def process_item(self, item, spider):
 
-        self.db.steamGames.insert(dict(item))
+        self.db.steam.insert(dict(item))
         return item

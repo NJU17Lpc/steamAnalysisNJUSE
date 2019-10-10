@@ -13,6 +13,14 @@ class InputmongodbItem(scrapy.Item):
     name = scrapy.Field()
     url = scrapy.Field()
     price = scrapy.Field()
+
+    release_date = scrapy.Field()
+    developer = scrapy.Field()
+    publisher = scrapy.Field()
+    summary = scrapy.Field()
+    review = scrapy.Field()
+    image = scrapy.Field()
+
     tags = scrapy.Field()
     comments = scrapy.Field()
     pass
